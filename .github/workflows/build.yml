@@ -26,9 +26,18 @@ jobs:
     - name: Install pipenv
       run: pipx install pipenv
     - name: Install dependencies
-      run: pipenv sync --categories build
+      run: |
+        pipenv sync
+        pipenv sync --categories build
     - name: Build with Nuitka
       run: pipenv run build-windows
+    - name: Upload the build artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: SimpleTranslator
+        path: ${{ github.workspace }}\dist\SimpleTranslator.exe
+        if-no-files-found: error
+        retention-days: 1
 
   check:
     name: Check
