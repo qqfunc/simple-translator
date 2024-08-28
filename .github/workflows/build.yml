@@ -33,7 +33,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: SimpleTranslator
-        path: ${{ github.workspace }}/dist/SimpleTranslator.exe
+        path: ${{ github.workspace }}\dist\SimpleTranslator.exe
         if-no-files-found: error
         retention-days: 1
 
