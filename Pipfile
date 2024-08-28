@@ -1,0 +1,27 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pyside6 = "*"
+
+[dev-packages]
+mypy = "*"
+ruff = "*"
+
+[build]
+nuitka = "*"
+
+[requires]
+python_version = "3.12"
+
+[scripts]
+start = "python src/main.py"
+build-windows = """
+    nuitka src/main.py --standalone --onefile --follow-imports \
+    --assume-yes-for-downloads --output-filename=SimpleTranslator.exe \
+    --output-dir=dist --windows-console-mode=disable \
+    --product-name="Simple Translator" --product-version=1.0.0 \
+    --enable-plugins=pyside6\
+    """

@@ -1,0 +1,18 @@
+[tool.mypy]
+exclude = ["^dist/"]
+
+[tool.ruff]
+line-length = 79
+
+[tool.ruff.format]
+docstring-code-line-length = 72
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = ["D203", "D213", "INP001"]
+
+[tool.ruff.lint.pycodestyle]
+max-doc-length = 72
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**.py" = ["S101"]

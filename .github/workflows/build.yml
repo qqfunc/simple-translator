@@ -1,0 +1,52 @@
+name: Build
+
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout ${{ github.repository }}
+      uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+        cache: 'pipenv'
+    - name: Install pipenv
+      run: pipx install pipenv
+    - name: Install dependencies
+      run: pipenv sync --categories build
+    - name: Build with Nuitka
+      run: pipenv run build-windows
+
+  check:
+    name: Check
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout ${{ github.repository }}
+      uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+        cache: 'pipenv'
+    - name: Install pipenv
+      run: pipx install pipenv
+    - name: Install dependencies
+      run: pipenv sync --dev
+    - name: Lint with Ruff
+      run: pipenv run ruff check --output-format=github
+    - name: Type check with mypy
+      run: pipenv run mypy .
