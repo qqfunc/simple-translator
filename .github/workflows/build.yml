@@ -32,7 +32,7 @@ jobs:
     - name: Build with Nuitka
       run: pipenv run build-windows
     - name: Upload the build artifact
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: SimpleTranslator
         path: ${{ github.workspace }}\dist\SimpleTranslator.exe
